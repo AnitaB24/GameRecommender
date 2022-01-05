@@ -31,6 +31,19 @@ app.get('/get-user',function(req,res){
     });
     res.send('It Works');
 });
+app.get('/get-games',function(req,res){
+    session
+        .run('MATCH(n:IGRICA) RETURN n')
+        .then(function(result){
+        result.records.forEach(function(record){
+            console.log(record._fields[0].properties);
+        });
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+    res.send('It Works');
+});
 
 
 app.listen(3000);
