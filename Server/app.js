@@ -148,6 +148,7 @@ app.post('/set-user', (req, res) => {
             res.send(err);
         })
 })
+
 app.post('/set-survey', (req, res) => {
     const newSurvey = req.body
 
@@ -178,7 +179,7 @@ app.post('/set-recomended-category', (req, res) => {
     const recCat = req.body;
 
     session.run(`MATCH(n:ANKETA {naziv:"${recCat.nazivAnkete}"}), (m:TIP_IGRICA {naziv:"${recCat.nazivTipa}"})
-    CREATE (n)-[v:FILTRIRANO]->(m)`)
+    CREATE (n)-[v:FILTRIRANO {precizno: ${recCat.precizno}}]->(m)`)
         .then(response => {
             res.send(response);
         })
