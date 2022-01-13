@@ -18,7 +18,7 @@ const Profil = (props) => {
     return (
         <div>
             <Header/>
-            <div className="container rounded bg-white mt-5 mb-5">
+            <div className="container rounded bg-white mt-5 mb-5 d-flex justify-content-center">
                 <div className="row">
                     <div className="col-md-3 border-right">
                         <div className="d-flex flex-column align-items-center text-center p-3 py-5"><img
