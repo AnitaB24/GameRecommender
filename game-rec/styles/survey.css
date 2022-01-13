@@ -1,0 +1,24 @@
+input[type=radio][value="option1"]:checked+label:after {
+    border-color: #2e7d32;
+    background-color: #2e7d32;
+}
+
+input[type=radio][value="option2"]:checked+label:after {
+    border-color: #64dd17;
+    background-color: #64dd17;
+}
+
+input[type=radio][value="option3"]:checked+label:after {
+    border-color: #ffea00;
+    background-color: #ffea00;
+}
+
+input[type=radio][value="option4"]:checked+label:after {
+    border-color: #ff9800;
+    background-color: #ff9800;
+}
+
+input[type=radio][value="option5"]:checked+label:after {
+    border-color: #d50000;
+    background-color: #d50000;
+}

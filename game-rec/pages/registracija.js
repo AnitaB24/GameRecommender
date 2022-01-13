@@ -32,7 +32,7 @@ function Registracija() {
         const sifraProvera = userData.sifraProvera;
         const url = 'http://localhost:3000/set-user'
 
-        if (ime === '' || prezime === '') {
+        if (ime === '' || prezime === '' || username === '' || email === '' || sifra === '' || sifraProvera === '') {
             alert("Niste popunili sva neophodna polja!");
             return;
         }
@@ -62,13 +62,11 @@ function Registracija() {
                     "sifra": sifra
                 })
             })
-            console.log(response);
             return response
         }
 
         postData(url)
             .then(data => {
-                console.log(data);
                 Router.push("/prijava");
             });
     }

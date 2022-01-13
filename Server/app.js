@@ -99,15 +99,17 @@ app.post('/get-user-by-username', (req, res) => {
         })
 })
 
-app.get('/get-user-surveys', (req, res) => {
+app.post('/get-user-surveys', (req, res) => {
     const userName = req.body.username;
+    console.log(userName);
     let surveys = [];
 
     session.run(`MATCH(n:KORISNIK {username: "${userName}"}) -[v:IZABRAO]-> (m:ANKETA) RETURN m`)
         .then(result => {
             result.records.forEach(record => {
-                surveys.push(record._fields[0].properties);
+                surveys.push(record._fields[0].properties.naziv);
             })
+            console.log(surveys)
             res.send(JSON.stringify(surveys));
         })
         .catch(err => {
@@ -133,12 +135,13 @@ app.get('/get-filtered-types', (req, res) => {
         })
 })
 
-app.get('/get-recomended-games', (req, res) => {
+app.post('/get-recomended-games', (req, res) => {
     const userName = req.body.username;
+    const nazivAnkete = req.body.nazivAnkete;
     const games = [];
 
     session.run(`MATCH(n:KORISNIK {username: "${userName}"}) -[v:IZABRAO]-> 
-    (a:ANKETA) -[vs:FILTRIRANO]-> (m:TIP_IGRICA) -[vv:PREPORUCENO]-> (k:IGRICA) RETURN k`)
+    (a:ANKETA {naziv: "${nazivAnkete}") -[vs:FILTRIRANO]-> (m:TIP_IGRICA) -[vv:PREPORUCENO]-> (k:IGRICA) RETURN k`)
         .then(result2 => {
             result2.records.forEach(game => {
                 games.push(game._fields[0].properties);
