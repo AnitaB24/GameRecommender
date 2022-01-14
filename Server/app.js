@@ -141,7 +141,7 @@ app.post('/get-recomended-games', (req, res) => {
     const games = [];
 
     session.run(`MATCH(n:KORISNIK {username: "${userName}"}) -[v:IZABRAO]-> 
-    (a:ANKETA {naziv: "${nazivAnkete}") -[vs:FILTRIRANO]-> (m:TIP_IGRICA) -[vv:PREPORUCENO]-> (k:IGRICA) RETURN k`)
+    (a:ANKETA {naziv: "${nazivAnkete}"}) -[vs:FILTRIRANO]-> (m:TIP_IGRICA) -[vv:PREPORUCENO]-> (k:IGRICA) RETURN k`)
         .then(result2 => {
             result2.records.forEach(game => {
                 games.push(game._fields[0].properties);

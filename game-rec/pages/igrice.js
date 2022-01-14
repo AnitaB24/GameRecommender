@@ -8,6 +8,10 @@ import {withAuthSync} from "../utils/auth";
 
 const Igrice = (props) => {
 
+    const [gameData, setGameData] = useState({
+        games:[]
+    })
+
     const [userData, setUserData] = useState({
         nazivAnkete: ''
     })
@@ -40,8 +44,39 @@ const Igrice = (props) => {
         }
         postData(url)
             .then(data => {
-                console.log(data)
+                    getGames(data)
             });
+    }
+
+    function getGames(games) {
+        setGameData(Object.assign({}, gameData, {games: games}))
+    }
+
+    function renderGames () {
+        console.log(gameData.games.length)
+        if(gameData.games.length === 0)
+            return;
+                const games = gameData.games.map((game,ind) => (
+                    <tr key={ind}>
+                        <td><img style={{width: "100px", height: "70px"}} src={game.slika} alt={""}/></td>
+                        <td>{game.naziv}</td>
+                        <td/>
+                        <td/>
+                        <td className="text-right"/>
+                        <td className="text-right">
+                            <a href={game.link} target={"_blank"}>
+                                <button className="btn btn-sm btn-danger"><i
+                                    className="fa fa-trash"/>Saznaj jos
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                ));
+        return (
+            <tbody>
+                {games}
+            </tbody>
+        )
     }
 
     return(
@@ -64,6 +99,19 @@ const Igrice = (props) => {
                 </div>
                 <button onClick={handleSubmit}>Prikazati preporucene igrice</button>
             </div>
+            <table className="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col"/>
+                    <th scope="col">Igrica</th>
+                    <th scope="col"/>
+                    <th scope="col" className="text-center"/>
+                    <th scope="col" className="text-right"/>
+                    <th scope="col" className="text-right">Sajt igrice</th>
+                </tr>
+                </thead>
+                {renderGames()}
+            </table>
             <Footer/>
         </div>
     )
