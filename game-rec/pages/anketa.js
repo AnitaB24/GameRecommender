@@ -163,7 +163,7 @@ const Anketa = (props) => {
                         }
                     })
                 })
-            })
+            alert('Popunjena anketa!')})
     }
 
     return (

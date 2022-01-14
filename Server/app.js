@@ -101,7 +101,6 @@ app.post('/get-user-by-username', (req, res) => {
 
 app.post('/get-user-surveys', (req, res) => {
     const userName = req.body.username;
-    console.log(userName);
     let surveys = [];
 
     session.run(`MATCH(n:KORISNIK {username: "${userName}"}) -[v:IZABRAO]-> (m:ANKETA) RETURN m`)
@@ -109,7 +108,6 @@ app.post('/get-user-surveys', (req, res) => {
             result.records.forEach(record => {
                 surveys.push(record._fields[0].properties.naziv);
             })
-            console.log(surveys)
             res.send(JSON.stringify(surveys));
         })
         .catch(err => {

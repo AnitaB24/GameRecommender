@@ -53,7 +53,6 @@ const Igrice = (props) => {
     }
 
     function renderGames () {
-        console.log(gameData.games.length)
         if(gameData.games.length === 0)
             return;
                 const games = gameData.games.map((game,ind) => (
