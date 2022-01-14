@@ -12,7 +12,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-app.use(express.json({type: '*/*'}));
+app.use(express.json({ type: '*/*' }));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -81,7 +81,7 @@ app.post('/get-user', (req, res) => {
     const userName = req.body.username;
     session.run(`MATCH(user:KORISNIK) WHERE user.username = "${userName}" RETURN user`)
         .then(result => {
-            res.send({status:200, body: JSON.parse(result.records[0]._fields[0].properties)});
+            res.send({ status: 200, body: JSON.parse(result.records[0]._fields[0].properties) });
         })
         .catch(err => {
             res.send(err);
@@ -92,7 +92,7 @@ app.post('/get-user-by-username', (req, res) => {
     const userName = req.body.token.token;
     session.run(`MATCH(user:KORISNIK) WHERE user.username = "${userName}" RETURN user`)
         .then(result => {
-            res.send({status:200, body: result.records[0]._fields[0].properties});
+            res.send({ status: 200, body: result.records[0]._fields[0].properties });
         })
         .catch(err => {
             res.send(err);
@@ -195,6 +195,18 @@ app.post('/set-recomended-category', (req, res) => {
 
     session.run(`MATCH(n:ANKETA {naziv:"${recCat.nazivAnkete}"}), (m:TIP_IGRICA {naziv:"${recCat.nazivTipa}"})
     CREATE (n)-[v:FILTRIRANO {precizno: ${recCat.precizno}}]->(m)`)
+        .then(response => {
+            res.send(response);
+        })
+        .catch(err => {
+            res.send(err);
+        })
+})
+
+app.post('/delete-survey', (req, res) => {
+    const nazivAnkete = req.body.nazivAnkete;
+
+    session.run(`MATCH(n:ANKETA {naziv: "${nazivAnkete}"}) DETACH DELETE n`)
         .then(response => {
             res.send(response);
         })
